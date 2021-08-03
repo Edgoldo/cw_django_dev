@@ -81,3 +81,12 @@ python manage.py runserver
 ```bash
 python manage.py test
 ```
+
+## Servidor de desarrollo
+
+El proyecto se encuentra desplegado para pruebas en la url: https://cw-django-challenge.herokuapp.com/
+
+### Usuarios de prueba
+
+    admin con la contraseña admin1234
+    user1, user2, user3 con la contraseña clarity123
