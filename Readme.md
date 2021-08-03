@@ -40,3 +40,44 @@ ranking: `6*10 + 2*5 - 1*3 + 10 = 60 + 10 - 3 +10 = 77`
 Este es un ejemplo de como queda el listado con su ranking y se ve como respondió/votó el usuario actual.
 
 ![Example](example.png)
+
+
+## Instalación:
+
+### Tecnologías requeridas
+
+- Python 3.6+
+- pip (python-pip)
+
+### Local
+
+- Configuracion de entorno
+
+```bash
+# Crear entorno
+python -m venv env
+
+# Ingresar al entorno
+source env/bin/activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Crear archivos de migración
+python manage.py makemigrations
+
+# Realizar migraciones a db
+python manage.py migrate
+```
+
+- Iniciar servidor web
+
+```bash
+python manage.py runserver
+```
+
+### Ejecutar tests
+
+```bash
+python manage.py test
+```
