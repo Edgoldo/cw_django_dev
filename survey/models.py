@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -9,8 +10,31 @@ class Question(models.Model):
                                on_delete=models.CASCADE)
     title = models.CharField('Título', max_length=200)
     description = models.TextField('Descripción')
-    # TODO: Quisieramos tener un ranking de la pregunta, con likes y dislikes dados por los usuarios.
+    like = models.PositiveIntegerField(default=0)
+    dislike = models.PositiveIntegerField(default=0)
 
+    @property
+    def ranking(self):
+        QUESTION_POINTS = {
+            'answers': 10,
+            'likes': 5,
+            'dislikes': 3,
+            'today': 10
+        }
+        answers = Answer.objects.filter(
+            question=self, value__gt=0
+        ).count()
+        today = datetime.now()
+        today_points = 0
+        if self.created == today:
+            today_points = QUESTION_POINTS['today']
+        ranking = (
+            answers*QUESTION_POINTS['answers'] +
+            self.like*QUESTION_POINTS['likes'] -
+            self.dislike*QUESTION_POINTS['dislikes'] +
+            today_points
+        )
+        return ranking
 
     def get_absolute_url(self):
         return reverse('survey:question-edit', args=[self.pk])
@@ -28,3 +52,4 @@ class Answer(models.Model):
     author = models.ForeignKey(get_user_model(), related_name="answers", verbose_name='Autor', on_delete=models.CASCADE)
     value = models.PositiveIntegerField("Respuesta", default=0)
     comment = models.TextField("Comentario", default="", blank=True)
+    like_dislike = models.BooleanField(null=True)

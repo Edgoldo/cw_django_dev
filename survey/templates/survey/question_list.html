@@ -21,7 +21,7 @@
                             {% for val in '12345' %}
                                 <a class="mx-1 answer {% if question.user_value|slugify == val %}fas{% else %}fal{% endif %} fa-star text-decoration-none"
                                    data-question="{{ question.pk }}"
-                                   data-value="{{ val }}" href="#"></a>
+                                   data-value="{{ val }}" href="#" onclick="send_answer('{{question.pk}}', '{{ val }}')"></a>
                             {% endfor %}
                         </div>
                     </div>
@@ -29,9 +29,9 @@
                         <u class="fw-lighter mb-1">Evalúa la pregunta</u>
                         <div>
                             <a class="mx-1 like {% if question.user_likes %}fas{% else %}fal{% endif %} fa-thumbs-up text-decoration-none"
-                               href="#" data-question="{{ question.pk }}" data-value="like" ></a>
+                               href="#" data-question="{{ question.pk }}" data-value="like" onclick="send_like_dislike('{{question.pk}}', 1)"></a>
                             <a class="mx-1 like {% if question.user_dislikes %}fas{% else %}fal{% endif %} fa-thumbs-up fa-flip-both text-decoration-none"
-                               href="#" data-question="{{ question.pk }}" data-value="dislike"></a>
+                               href="#" data-question="{{ question.pk }}" data-value="dislike" onclick="send_like_dislike('{{question.pk}}', 0)"></a>
                         </div>
                     </div>
                     <div class="col-2">
@@ -52,7 +52,6 @@
 
 {% block js %}
     <script>
-
 
     </script>
 
